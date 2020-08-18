@@ -55,7 +55,7 @@ snql_grammar = Grammar(
     having_clause         = space* "HAVING" or_expression space*
     order_by_clause       = space* "ORDER BY" order_list space*
 
-    condition             = low_pri_arithmetic condition_op (function_call / quoted_literal / string_literal / column_name / numeric_literal) space*
+    condition             = low_pri_arithmetic condition_op (function_call / quoted_literal / column_name / numeric_literal) space*
     condition_op          = "=" / "!=" / ">" / ">=" / "<" / "<="
 
     and_expression        = space* condition space* (and_tuple)*
