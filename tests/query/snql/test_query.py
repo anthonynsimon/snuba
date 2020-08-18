@@ -5,8 +5,7 @@ from snuba.datasets.factory import get_dataset
 from snuba.query.conditions import binary_condition
 from snuba.query.expressions import Column, FunctionCall, Literal
 from snuba.query.logical import OrderBy, OrderByDirection, Query, SelectedExpression
-from snuba.query.snql.parser import parse_snql_query
-
+from snuba.query.snql.parser import parse_snql_query_impl
 
 test_cases = [
     pytest.param(
@@ -317,7 +316,7 @@ test_cases = [
 def test_format_expressions(query_body: str, expected_query: Query) -> None:
     state.set_config("query_parsing_expand_aliases", 1)
     events = get_dataset("events")
-    query = parse_snql_query(query_body, events)
+    query = parse_snql_query_impl(query_body, events)
 
     assert (
         query.get_selected_columns_from_ast()
