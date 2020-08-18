@@ -403,14 +403,21 @@ class SnQLVisitor(NodeVisitor):
         return generic_visit(node, visited_children)
 
 
+def parse_snql_query_impl(body: str, dataset: Dataset) -> Query:
+    exp_tree = snql_grammar.parse(body)
+    query = SnQLVisitor().visit(exp_tree)
+    return query
+
+
 def parse_snql_query(body: str, dataset: Dataset) -> Query:
     """
     Parses the query body generating the AST. This only takes into
     account the initial query body. Extensions are parsed by extension
     processors and are supposed to update the AST.
     """
-    exp_tree = snql_grammar.parse(body)
-    query = SnQLVisitor().visit(exp_tree)
+    #    exp_tree = snql_grammar.parse(body)
+    #    query = SnQLVisitor().visit(exp_tree)
+    query = parse_snql_query_impl(body, dataset)
     _validate_empty_table_names(query)
     _validate_aliases(query)
     _parse_subscriptables(query)
