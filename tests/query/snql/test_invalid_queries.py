@@ -2,7 +2,7 @@ import pytest
 from parsimonious.exceptions import IncompleteParseError
 
 from snuba.datasets.factory import get_dataset
-from snuba.query.snql.parser import parse_snql_query
+from snuba.query.snql.parser import parse_snql_query_impl
 
 test_cases = [
     # below are all cases that are not parsed completely
@@ -29,4 +29,4 @@ test_cases = [
 def test_failures(query_body: str, expected_exception,) -> None:
     with pytest.raises(expected_exception):
         events = get_dataset("events")
-        parse_snql_query(query_body, events)
+        parse_snql_query_impl(query_body, events)
