@@ -27,11 +27,11 @@ class DictSqlQuery(SqlQuery):
 
         aggregate_exprs = [
             column_expr(dataset, col, query, parsing_context, alias, agg)
-            for (agg, col, alias) in query.get_aggregations()
+            for (agg, col, alias) in query.get_aggregations() or []
         ]
-        groupby = util.to_list(query.get_groupby())
+        groupby = util.to_list(query.get_groupby() or [])
         group_exprs = [
-            column_expr(dataset, gb, query, parsing_context) for gb in groupby
+            column_expr(dataset, gb, query, parsing_context) for gb in groupby or []
         ]
         column_names = query.get_selected_columns() or []
         selected_cols = [
